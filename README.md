@@ -5,7 +5,7 @@ Projeto desenvolvido em JavaScript com testes unitários utilizando a biblioteca
 ## Estrutura do projeto
 
 ```text
-atividade4_ambientes-main/
+entregavel4/
 ├── funcoes/
 │   ├── contagem.js
 │   ├── fibonacci.js
