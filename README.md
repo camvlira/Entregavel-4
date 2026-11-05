@@ -1,18 +1,18 @@
-# Atividade 4 — Testes unitários dos algoritmos fundamentais
+# Entregável 4
 
-Projeto desenvolvido em JavaScript com testes unitários utilizando a biblioteca Jest.
+Projeto com os **Algoritmos Fundamentais** da atividade #1 reescritos como funções testáveis. Os testes unitários são escritos com a biblioteca **[Jest](https://jestjs.io/docs/getting-started)**.
 
 ## Estrutura do projeto
 
-```text
+```
 entregavel4/
 ├── funcoes/
-│   ├── contagem.js
-│   ├── fibonacci.js
-│   ├── mdc.js
-│   ├── numeroprimo.js
-│   ├── quicksort.js
-│   └── somatorio.js
+│   ├── contagem.js       # Conta valores entre o 1º elemento e N
+│   ├── fibonacci.js      # Gera os N primeiros termos de Fibonacci
+│   ├── mdc.js            # Máximo Divisor Comum (algoritmo de Euclides)
+│   ├── numeroprimo.js    # Verifica se um número é primo
+│   ├── quicksort.js      # Ordena um array com Quicksort
+│   └── somatorio.js      # Soma os números de um array
 ├── tests/
 │   ├── contagem.test.js
 │   ├── fibonacci.test.js
@@ -20,66 +20,95 @@ entregavel4/
 │   ├── numeroprimo.test.js
 │   ├── quicksort.test.js
 │   └── somatorio.test.js
-├── .gitignore
 ├── package.json
+├── package-lock.json
 └── README.md
 ```
 
-## Requisitos
+## Pré-requisitos
 
-- Node.js e npm instalados.
-- Conexão com a internet na primeira instalação das dependências.
+- [Node.js](https://nodejs.org/) instalado (o npm vem junto).
 
-## Como instalar
+Para conferir, rode no terminal:
 
-Abra o terminal na pasta do projeto e execute:
+```bash
+node --version
+npm --version
+```
+
+## Como rodar o projeto
+
+Abra o terminal na pasta do projeto (no VS Code: **Ctrl + '**) e rode:
 
 ```bash
 npm install
-```
-
-## Como executar os testes
-
-Depois da instalação, execute:
-
-```bash
 npm test
 ```
 
-O Jest localizará automaticamente os arquivos com o padrão `*.test.js` dentro da pasta `tests` e exibirá o resultado de cada teste.
+- `npm install` baixa o Jest e as demais dependências listadas no `package.json` (cria a pasta `node_modules`).
+- `npm test` executa todos os testes da pasta `tests`.
 
-## Testes implementados
+### Resultado esperado
 
-Cada algoritmo possui pelo menos dois testes:
+```
+ PASS  tests/contagem.test.js
+  √ [3, 8, 4, 2, 6, 5] tem 4 valores entre 3 e 6
+  √ [1, 1, 1] tem 3 valores entre 1 e 3
+ PASS  tests/fibonacci.test.js
+  ...
 
-| Algoritmo | Testes |
-|---|---:|
-| Contagem de aprovações | 2 |
-| Sequência de Fibonacci | 2 |
-| Máximo Divisor Comum (MDC) | 2 |
-| Verificação de número primo | 2 |
-| Quicksort | 2 |
-| Somatório | 2 |
-| **Total** | **12** |
-
-Os testes verificam resultados positivos e/ou negativos para diferentes entradas. No teste de Fibonacci, `toEqual()` compara o conteúdo completo do array esperado.
-
-## Boas práticas aplicadas
-
-As funções utilizam nomes que indicam claramente suas responsabilidades. Também fazem validações de entrada e lançam exceções quando recebem valores inválidos, conforme o caso. O Quicksort retorna um novo array, sem modificar o array original.
-
-## Publicar no GitHub
-
-Para enviar o projeto a um repositório GitHub:
-
-```bash
-git init
-git add .
-git commit -m "Adiciona algoritmos e testes unitários com Jest"
-git branch -M main
-git remote add origin URL_DO_SEU_REPOSITORIO
-git push -u origin main
+Test Suites: 6 passed, 6 total
+Tests:       12 passed, 12 total
 ```
 
-Substitua `URL_DO_SEU_REPOSITORIO` pela URL do repositório criado no GitHub. Se o repositório já estiver configurado, basta executar `git add .`, `git commit -m "Atualiza testes e documentação"` e `git push`.
+Para conferir a versão do Jest instalada:
 
+```bash
+npx jest --version
+```
+
+## Como o projeto foi configurado (passo a passo)
+
+Esses passos já foram feitos neste projeto. Ficam registrados aqui para quem quiser montar do zero.
+
+**1. Criar o `package.json`**
+
+```bash
+npm init -y
+```
+
+**2. Instalar o Jest como dependência de desenvolvimento**
+
+```bash
+npm install --save-dev jest
+```
+
+**3. Configurar o comando `npm test`**
+
+No `package.json`, deixe a parte `"scripts"` assim:
+
+```json
+"scripts": {
+  "test": "jest --verbose"
+}
+```
+
+O `--verbose` mostra cada teste individualmente com ✓ (ou ✗ quando falha).
+
+## Como funciona um teste
+
+Cada arquivo em `tests/` importa uma função de `funcoes/` e compara o resultado com o valor esperado:
+
+```js
+const calcularMdc = require('../funcoes/mdc');
+
+test('MDC de 48 e 36 é 12', () => {
+    expect(calcularMdc(48, 36)).toBe(12);
+});
+```
+
+- `toBe` compara valores simples (números, booleanos).
+- `toEqual` compara arrays e objetos.
+- `toThrow` verifica se a função lança um erro com entrada inválida.
+
+Para que o teste consiga importar a função, cada arquivo de `funcoes/` termina com `module.exports = nomeDaFuncao;`.
