@@ -89,7 +89,7 @@ No `package.json`, deixe a parte `"scripts"` assim:
 
 ```json
 "scripts": {
-  "test": "jest --verbose"
+  "test": "jest"
 }
 ```
 
